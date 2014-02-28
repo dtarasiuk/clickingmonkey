@@ -33,9 +33,9 @@ ClickingMonkey = function() {
     });
     return _this;
   };
-  this.submitForm = function(delay) {
-    if (delay == null) delay = 1000;
-    return _this.clickElem('[type=submit]', delay);
+  this.submitForm = function(ms) {
+    if (ms == null) ms = 1000;
+    return _this.clickElem('[type=submit]', ms);
   };
   return this;
 };
