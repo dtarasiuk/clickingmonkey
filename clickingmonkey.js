@@ -1,43 +1,41 @@
-var clickElem, loadScript, start, submitForm, typeElem;
+var ClickingMonkey;
 
-loadScript = function(sUrl) {
-  var nScript;
-  nScript = document.createElement('script');
-  nScript.setAttribute('language', 'JavaScript');
-  nScript.setAttribute('src', sUrl);
-  return document.body.appendChild(nScript);
-};
-
-if (!(typeof Q !== "undefined" && Q !== null)) {
-  loadScript('//cdnjs.cloudflare.com/ajax/libs/q.js/1.0.0/q.js');
-}
-
-start = function(firstCallback) {
-  return firstCallback();
-};
-
-clickElem = function(selector, delay) {
-  if (delay == null) delay = 100;
-  return function() {
-    var deferred;
-    deferred = Q.defer();
-    (document.querySelector(selector)).click();
-    setTimeout(deferred.resolve, delay);
-    return deferred.promise;
+ClickingMonkey = function() {
+  var delay, doClick, doType, promise,
+    _this = this;
+  if (!(this instanceof ClickingMonkey)) return new ClickingMonkey();
+  promise = new Promise(function(resolve, reject) {
+    return resolve();
+  });
+  delay = function(ms) {
+    return new Promise(function(resolve, reject) {
+      return setTimeout(resolve, ms);
+    });
   };
-};
-
-typeElem = function(selector, text) {
-  return function() {
-    var deferred;
-    deferred = Q.defer();
-    (document.querySelector(selector)).value = text;
-    deferred.resolve();
-    return deferred.promise;
+  doClick = function(selector) {
+    return (document.querySelector(selector)).click();
   };
-};
-
-submitForm = function(delay) {
-  if (delay == null) delay = 1000;
-  return clickElem('[type=submit]', delay);
+  doType = function(selector, text) {
+    return (document.querySelector(selector)).value = text;
+  };
+  this.clickElem = function(selector, ms) {
+    if (ms == null) ms = 1000;
+    promise = promise.then(function() {
+      doClick(selector);
+      return delay(ms);
+    });
+    return _this;
+  };
+  this.typeElem = function(selector, text) {
+    promise = promise.then(function() {
+      doType(selector, text);
+      return delay(1);
+    });
+    return _this;
+  };
+  this.submitForm = function(delay) {
+    if (delay == null) delay = 1000;
+    return _this.clickElem('[type=submit]', delay);
+  };
+  return this;
 };

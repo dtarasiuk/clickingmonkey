@@ -1,26 +1,27 @@
-loadScript = (sUrl) ->
-  nScript = document.createElement 'script'
-  nScript.setAttribute 'language', 'JavaScript'
-  nScript.setAttribute 'src', sUrl
-  document.body.appendChild nScript
+ClickingMonkey = ->
+  return new ClickingMonkey() if not (@ instanceof ClickingMonkey)
 
+  promise = new Promise (resolve, reject)-> resolve()
 
-loadScript '//cdnjs.cloudflare.com/ajax/libs/q.js/1.0.0/q.js' if !Q?
+  delay = (ms)->
+    new Promise (resolve, reject)-> setTimeout resolve, ms
+  doClick = (selector) ->
+    (document.querySelector selector).click()
+  doType = (selector, text) ->
+    (document.querySelector selector).value = text
 
-start = (firstCallback) ->
-  firstCallback()
+  @clickElem = (selector, ms=1000) =>
+    promise = promise.then ->
+      doClick selector
+      delay ms
+    @
 
-clickElem = (selector, delay=100) ->->
-  deferred = Q.defer()
-  (document.querySelector selector).click()
-  setTimeout deferred.resolve, delay
-  deferred.promise
+  @typeElem = (selector, text) =>
+    promise = promise.then ->
+      doType selector, text
+      delay 1
+    @
 
-typeElem = (selector, text) ->->
-  deferred = Q.defer()
-  (document.querySelector selector).value = text
-  deferred.resolve()
-  deferred.promise
-
-submitForm = (delay=1000) ->
-  clickElem '[type=submit]', delay
+  @submitForm = (delay=1000) =>
+    @clickElem '[type=submit]', delay
+  @
