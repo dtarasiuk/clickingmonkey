@@ -11,8 +11,8 @@ Usage
 ==============
 ```javascript
 ClickingMonkey()
-  .clickElem('.TARGETCLASS', 5000) #Wait 5000 milliseconds(5 seconds) before next step
-  .clickElem('.TARGETCLASS2', 1000) #Wait 1000 milliseconds(1 second) before next step
+  .clickElem('.TARGETCLASS', 5000) //Wait 5000 milliseconds(5 seconds) before next step
+  .clickElem('.TARGETCLASS2', 1000) //Wait 1000 milliseconds(1 second) before next step
   .clickElem('.TARGETCLASS3')
   .submitForm()
 ```
