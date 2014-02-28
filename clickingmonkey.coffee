@@ -22,6 +22,6 @@ ClickingMonkey = ->
       delay 1
     @
 
-  @submitForm = (delay=1000) =>
-    @clickElem '[type=submit]', delay
+  @submitForm = (ms=1000) =>
+    @clickElem '[type=submit]', ms
   @
