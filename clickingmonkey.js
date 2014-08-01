@@ -13,10 +13,12 @@ ClickingMonkey = function() {
     });
   };
   doClick = function(selector) {
-    return (document.querySelector(selector)).click();
+    var _ref;
+    return (_ref = document.querySelector(selector)) != null ? _ref.click() : void 0;
   };
   doType = function(selector, text) {
-    return (document.querySelector(selector)).value = text;
+    var _ref;
+    return (_ref = document.querySelector(selector)) != null ? _ref.value = text : void 0;
   };
   this.clickElem = function(selector, ms) {
     if (ms == null) ms = 1000;
