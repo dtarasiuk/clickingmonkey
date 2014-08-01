@@ -6,9 +6,9 @@ ClickingMonkey = ->
   delay = (ms)->
     new Promise (resolve, reject)-> setTimeout resolve, ms
   doClick = (selector) ->
-    (document.querySelector selector).click()
+    (document.querySelector selector)?.click()
   doType = (selector, text) ->
-    (document.querySelector selector).value = text
+    (document.querySelector selector)?.value = text
 
   @clickElem = (selector, ms=1000) =>
     promise = promise.then ->
